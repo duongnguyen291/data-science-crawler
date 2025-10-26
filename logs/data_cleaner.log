@@ -1,0 +1,11 @@
+2025-10-26 22:59:38 - data_cleaner - INFO - Testing cleaner logger
+2025-10-26 23:00:15 - data_cleaner - INFO - Bắt đầu làm sạch 10 comments...
+2025-10-26 23:00:15 - data_cleaner - INFO - Hoàn thành làm sạch:
+2025-10-26 23:00:15 - data_cleaner - INFO -   - Comments hợp lệ: 10/10
+2025-10-26 23:00:15 - data_cleaner - INFO -   - Tiếng Việt: 8
+2025-10-26 23:00:15 - data_cleaner - INFO -   - Tiếng Anh: 2
+2025-10-26 23:04:07 - data_cleaner - INFO - Bắt đầu làm sạch 50 comments...
+2025-10-26 23:04:07 - data_cleaner - INFO - Hoàn thành làm sạch:
+2025-10-26 23:04:07 - data_cleaner - INFO -   - Comments hợp lệ: 50/50
+2025-10-26 23:04:07 - data_cleaner - INFO -   - Tiếng Việt: 49
+2025-10-26 23:04:07 - data_cleaner - INFO -   - Tiếng Anh: 1

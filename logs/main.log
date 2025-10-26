@@ -1,0 +1,5 @@
+2025-10-26 22:59:38 - main - INFO - Testing logging configuration
+2025-10-26 23:04:06 - main - INFO - Starting comment crawl for: https://www.youtube.com/watch?v=qd3t_JSQXWo
+2025-10-26 23:04:07 - main - INFO - Successfully crawled 50 comments
+2025-10-26 23:04:07 - main - INFO - Cleaning 50 comments...
+2025-10-26 23:04:07 - main - INFO - Cleaning completed: 50/50 valid comments
