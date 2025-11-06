@@ -12,17 +12,23 @@ Dự án phân tích cảm xúc (sentiment analysis) trên comments từ các n�
 
 ### ✅ Đã hoàn thành
 - [x] **YouTube Comment Crawler** - Sử dụng YouTube Data API v3
+- [x] **Threads Scraper** - Crawl dữ liệu từ Threads by Meta (NEW! 🎉)
+  - Scrape thread (post) với replies
+  - Scrape profile với threads gần đây
+  - So sánh nhiều users
+  - Phân tích engagement chi tiết
+  - Export JSON/CSV/Excel
 - [x] **Top Comments Feature** - Lấy comments có lượt like cao nhất
 - [x] **Multiple Ordering Options** - Sắp xếp theo thời gian, relevance
 - [x] **Data Schema** - Cấu trúc dữ liệu chuẩn hóa
 - [x] **Data Cleaning** - Làm sạch và chuẩn hóa dữ liệu
 - [x] **Language Detection** - Phát hiện ngôn ngữ (Tiếng Việt/Tiếng Anh)
-- [x] **Export Data** - Xuất dữ liệu CSV/JSON
+- [x] **Export Data** - Xuất dữ liệu CSV/JSON/Excel
 
 ### 🚧 Đang phát triển
 - [ ] **Sentiment Analysis Models** - PhoBERT, BERT, etc.
 - [ ] **Visualization Dashboard** - Streamlit/Flask
-- [ ] **Multi-platform Support** - Facebook, TikTok, Instagram
+- [ ] **Multi-platform Support** - Facebook, TikTok, Instagram (Threads ✅)
 - [ ] **Database Integration** - SQLite/PostgreSQL
 
 ## 🚀 Cài đặt
@@ -267,6 +273,78 @@ logging.basicConfig(level=logging.DEBUG)
 3. Commit changes
 4. Push to branch
 5. Tạo Pull Request
+
+## 🧵 Threads Scraper - NEW!
+
+### Cài đặt nhanh
+```bash
+# Cài đặt thư viện
+pip install playwright jmespath nested-lookup parsel pandas openpyxl
+
+# Cài đặt browser
+playwright install chromium
+```
+
+### Sử dụng Interactive Menu
+```bash
+python threads_scraper_complete.py
+```
+
+Chọn chức năng:
+1. **Scrape một thread** - Lấy post và tất cả replies
+2. **Scrape profile** - Lấy thông tin user và threads gần đây
+3. **So sánh users** - So sánh nhiều accounts
+4. **Phân tích engagement** - Phân tích metrics chi tiết
+
+### Sử dụng trong code
+
+```python
+from threads_scraper_complete import ThreadsScraper
+
+# Khởi tạo
+scraper = ThreadsScraper(headless=True)
+
+# Scrape profile
+data = scraper.scrape_user_by_username("natgeo")
+print(f"Followers: {data['user']['followers']:,}")
+print(f"Threads: {len(data['threads'])}")
+
+# Phân tích engagement
+analysis = scraper.analyze_engagement(data)
+print(f"Engagement rate: {analysis['avg_engagement_rate']:.4f}%")
+
+# Lưu dữ liệu
+scraper.save_to_json(data, "natgeo.json")
+scraper.save_to_excel(data, "natgeo.xlsx")
+
+# Đóng browser
+scraper.close()
+```
+
+### Quick Examples
+```bash
+# Basic usage example
+python threads_scraper_complete.py 2
+
+# Analysis example
+python threads_scraper_complete.py 3
+```
+
+### Tính năng
+- ✅ Scrape thread (post) với replies
+- ✅ Scrape user profile với threads
+- ✅ So sánh nhiều users
+- ✅ Phân tích engagement (likes, engagement rate, video performance)
+- ✅ Export JSON, CSV, Excel
+- ✅ Retry logic với exponential backoff
+- ✅ Logging chi tiết
+
+### Use Cases
+- 📊 Market research và competitor analysis
+- 📈 Brand monitoring và sentiment tracking
+- 🎯 Influencer analysis
+- 📱 Content performance analysis
+- 🔍 Social listening
 
 ## 📄 License
 
