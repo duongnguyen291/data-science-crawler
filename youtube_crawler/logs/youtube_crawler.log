@@ -1,0 +1,15 @@
+2025-11-16 21:40:58 - youtube_crawler - INFO - Video ID: dQw4w9WgXcQ
+2025-11-16 21:40:58 - youtube_crawler - INFO - Bắt đầu crawl comments cho video: dQw4w9WgXcQ
+2025-11-16 21:40:59 - youtube_crawler - INFO - Đã crawl được 50 comments
+2025-11-16 21:40:59 - youtube_crawler - INFO - Đã lưu 50 comments vào file: youtube_comments_20251116_214059.csv
+2025-11-16 21:40:59 - youtube_crawler - INFO - Đã lưu 50 comments vào file: youtube_comments_20251116_214059.json
+2025-11-16 21:42:16 - youtube_crawler - INFO - Lấy top comments cho video: -yW8lZHMp8E
+2025-11-16 21:42:16 - youtube_crawler - INFO - Bắt đầu crawl comments cho video: -yW8lZHMp8E
+2025-11-16 21:42:18 - youtube_crawler - INFO - Đã crawl được 400 comments
+2025-11-16 21:42:18 - youtube_crawler - INFO - Đã lấy 200 top comments (min_likes=1)
+2025-11-16 21:42:18 - youtube_crawler - INFO - Đã lưu 200 comments vào file: raw_comments_20251116_214218.csv
+2025-11-16 21:43:03 - youtube_crawler - INFO - Lấy top comments cho video: 3RmOvxilbPM
+2025-11-16 21:43:03 - youtube_crawler - INFO - Bắt đầu crawl comments cho video: 3RmOvxilbPM
+2025-11-16 21:43:12 - youtube_crawler - INFO - Đã crawl được 2170 comments
+2025-11-16 21:43:12 - youtube_crawler - INFO - Đã lấy 1088 top comments (min_likes=1)
+2025-11-16 21:43:12 - youtube_crawler - INFO - Đã lưu 1088 comments vào file: raw_comments_20251116_214312.csv
