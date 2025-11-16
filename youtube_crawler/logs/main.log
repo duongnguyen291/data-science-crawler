@@ -4,3 +4,5 @@
 2025-11-16 21:43:12 - main - INFO - Successfully crawled 1088 comments
 2025-11-16 21:43:12 - main - INFO - Cleaning 1088 comments...
 2025-11-16 21:43:12 - main - INFO - Cleaning completed: 1087/1088 valid comments
+2025-11-17 00:29:54 - main - INFO - Starting comment crawl for: https://www.youtube.com/watch?v=3RmOvxilbPM
+2025-11-17 00:30:15 - main - ERROR - Crawl failed: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond

@@ -13,3 +13,5 @@
 2025-11-16 21:43:12 - youtube_crawler - INFO - Đã crawl được 2170 comments
 2025-11-16 21:43:12 - youtube_crawler - INFO - Đã lấy 1088 top comments (min_likes=1)
 2025-11-16 21:43:12 - youtube_crawler - INFO - Đã lưu 1088 comments vào file: raw_comments_20251116_214312.csv
+2025-11-17 00:29:54 - youtube_crawler - INFO - Lấy top comments cho video: 3RmOvxilbPM
+2025-11-17 00:30:15 - youtube_crawler - ERROR - Error getting top comments: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
