@@ -125,22 +125,27 @@ class BulkThreadsScraper:
             return None
     
     def scrape_post_comments(self, post_url: str, post_likes: int, 
-                            target_comments: int = 20) -> List[Dict]:
+                            target_comments: int = 50) -> List[Dict]:
         """
         Scrape comments từ một post
         
         Args:
             post_url: URL của post
             post_likes: Số likes của post
-            target_comments: Số comments muốn lấy
+            target_comments: Số comments muốn lấy (default 50)
             
         Returns:
             List comments
         """
         # Điều chỉnh số comments dựa trên viral level
-        if post_likes > 1000:  # Viral post
-            target_comments = min(100, target_comments * 5)  # 50-100 comments
+        if post_likes > 5000:  # Very viral post
+            target_comments = 150
+            logger.info(f"    Very viral post ({post_likes:,} likes) - Target: {target_comments} comments")
+        elif post_likes > 1000:  # Viral post
+            target_comments = 100
             logger.info(f"    Viral post ({post_likes:,} likes) - Target: {target_comments} comments")
+        elif post_likes > 500:  # Popular post
+            target_comments = 75
         
         try:
             comments = self.scraper.get_top_comments(
@@ -187,7 +192,7 @@ class BulkThreadsScraper:
     
     def scrape_profile_full(self, username: str, 
                            max_posts: int = 200,
-                           comments_per_post: int = 20,
+                           comments_per_post: int = 50,
                            delay: float = 2.0,
                            resume: bool = False) -> Dict:
         """
@@ -436,7 +441,7 @@ class BulkThreadsScraper:
     
     def scrape_all_profiles(self, profiles: List[str], 
                            max_posts: int = 200,
-                           comments_per_post: int = 20,
+                           comments_per_post: int = 50,
                            delay: float = 3.0,
                            resume: bool = True):
         """
@@ -464,7 +469,7 @@ class BulkThreadsScraper:
         logger.info(f"{'='*70}")
         logger.info(f"Settings:")
         logger.info(f"  - Max posts per profile: {max_posts}")
-        logger.info(f"  - Comments per post: {comments_per_post} (viral: 50-100)")
+        logger.info(f"  - Comments per post: {comments_per_post} (viral >1k: 100, >5k: 150)")
         logger.info(f"  - Delay between profiles: {delay}s")
         logger.info(f"  - Checkpoint: {self.checkpoint_file}")
         logger.info(f"  - Backups: {self.backup_dir}")
@@ -558,8 +563,8 @@ def main():
         print(f"   {i:2d}. @{username}")
     
     print("\n SETTINGS:")
-    print(f"   Max posts per profile: 150-200")
-    print(f"   Comments per post: 20 (viral: 50-100)")
+    print(f"   Max posts per profile: 15-50 (Threads limit cho guest users)")
+    print(f"   Comments per post: 50 (viral >1k: 100, >5k: 150)")
     print(f"   Replies per comment: 1")
     
     print("\n MODE:")
@@ -583,9 +588,9 @@ def main():
     try:
         if choice == "1":
             # Full auto
-            max_posts = int(input("\nSố posts mỗi profile (default=175): ").strip() or "175")
-            comments = int(input("Comments mỗi post (default=20): ").strip() or "20")
-            delay = float(input("Delay giữa profiles (giây, default=3): ").strip() or "3")
+            max_posts = int(input("\nSố posts mỗi profile (default=50, Threads limit ~15-50): ").strip() or "50")
+            comments = int(input("Comments mỗi post (default=50): ").strip() or "50")
+            delay = float(input("Delay giữa profiles (giây, default=5): ").strip() or "5")
             
             resume = input("\nResume từ checkpoint? (y/n, default=y): ").strip().lower()
             resume = resume != 'n'
@@ -617,8 +622,8 @@ def main():
                 
                 print(f"\nSelected: {', '.join(['@'+p for p in selected_profiles])}")
                 
-                max_posts = int(input("\nSố posts mỗi profile (default=175): ").strip() or "175")
-                comments = int(input("Comments mỗi post (default=20): ").strip() or "20")
+                max_posts = int(input("\nSố posts mỗi profile (default=50): ").strip() or "50")
+                comments = int(input("Comments mỗi post (default=50): ").strip() or "50")
                 
                 resume = input("\nResume từ checkpoint? (y/n, default=y): ").strip().lower()
                 resume = resume != 'n'

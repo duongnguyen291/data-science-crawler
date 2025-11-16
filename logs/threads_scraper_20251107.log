@@ -1,0 +1,10 @@
+2025-11-07 20:09:34,038 - threads_scraper_complete - INFO - ThreadsScraper initialized
+2025-11-07 20:09:34,038 - threads_scraper_complete - INFO - Scraping profile: https://www.threads.net/@netflix (target: 20 posts)
+2025-11-07 20:09:35,373 - threads_scraper_complete - INFO - Browser started
+2025-11-07 20:09:41,126 - threads_scraper_complete - INFO - Initial load: 15 posts
+2025-11-07 20:09:41,128 - threads_scraper_complete - INFO - Starting scroll to load more posts (target: 20)...
+2025-11-07 20:09:50,233 - threads_scraper_complete - INFO - No more posts available. Total: 15 posts
+2025-11-07 20:09:50,246 - threads_scraper_complete - INFO - Scraped profile with 15 threads
+2025-11-07 20:09:50,330 - threads_scraper_complete - INFO - Browser closed
+2025-11-07 20:10:25,734 - threads_scraper_complete - INFO - ThreadsScraper initialized
+2025-11-07 20:10:32,555 - threads_scraper_complete - INFO - Browser started

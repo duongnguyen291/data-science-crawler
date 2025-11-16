@@ -385,9 +385,19 @@ class ThreadsScraper:
                     logger.info(f"Starting scroll to load more posts (target: {max_posts})...")
                     all_threads_ids = {t.get('id') for t in parsed['threads'] if t.get('id')}
                     no_new_posts_count = 0
-                    max_no_new = 5  # Stop after 5 scrolls without new posts
+                    max_no_new = 10  # Tăng lên 10 attempts
+                    scroll_count = 0
+                    max_scrolls = 30  # Tối đa 30 lần scroll
                     
-                    while len(all_threads_ids) < max_posts and no_new_posts_count < max_no_new:
+                    while len(all_threads_ids) < max_posts and no_new_posts_count < max_no_new and scroll_count < max_scrolls:
+                        # Scroll down multiple times
+                        for _ in range(3):  # Scroll 3 lần mỗi iteration
+                            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                            time.sleep(1)
+                        
+                        # Wait for potential lazy loading
+                        time.sleep(2)
+                        
                         selector = Selector(page.content())
                         hidden_datasets = selector.css('script[type="application/json"][data-sjs]::text').getall()
                         
@@ -429,14 +439,16 @@ class ThreadsScraper:
                                             all_threads_ids.add(thread_id)
                                             parsed['threads'].append(parse_thread(t))
                         
+                        scroll_count += 1
+                        
                         # Check if got new posts
                         new_count = len(all_threads_ids)
                         if new_count == prev_count:
                             no_new_posts_count += 1
-                            logger.debug(f"No new posts found ({no_new_posts_count}/{max_no_new})")
+                            logger.debug(f"No new posts found ({no_new_posts_count}/{max_no_new}) - scroll {scroll_count}")
                         else:
                             no_new_posts_count = 0
-                            logger.info(f"Loaded {new_count} posts so far...")
+                            logger.info(f"Loaded {new_count} posts so far... (scroll {scroll_count})")
                         
                         # Stop if reached target or no more posts
                         if new_count >= max_posts:
@@ -444,12 +456,8 @@ class ThreadsScraper:
                             break
                         
                         if no_new_posts_count >= max_no_new:
-                            logger.info(f"No more posts available. Total: {new_count} posts")
+                            logger.info(f"No more posts available after {scroll_count} scrolls. Total: {new_count} posts")
                             break
-                        
-                        # Scroll down
-                        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                        time.sleep(2)  # Wait for content to load
                 
                 page.close()
                 
