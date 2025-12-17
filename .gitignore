@@ -1,6 +1,84 @@
-.env
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Python
 __pycache__/
-data/*.json
-data/*.csv
-data/*.xlsx
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Data files
+data/
+*.csv
+*.json
+*.xlsx
+*.xls
+!requirements.txt
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Checkpoints
+.checkpoint.json
+*.checkpoint
+
+# Environment variables
+.env
+.env.local
+
+# Secrets / API keys (DO NOT COMMIT)
+api_keys.txt
+api_keys*.txt
+**/api_keys.txt
+**/api_keys*.txt
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Playwright
+playwright-browsers/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# pyenv
+.python-version
+
+# Backup files
+*.bak
+backups/
+*_backup.json
+
+# OS
+Thumbs.db
+.DS_Store

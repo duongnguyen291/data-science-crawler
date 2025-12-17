@@ -18,6 +18,14 @@ Dự án phân tích cảm xúc (sentiment analysis) trên comments từ các n�
   - So sánh nhiều users
   - Phân tích engagement chi tiết
   - Export JSON/CSV/Excel
+- [x] **Twitter Entertainment Crawler** - Sử dụng snscrape (NEW! 🔥)
+  - Scrape tweets về films và music
+  - Chỉ lấy English tweets
+  - Tự động phân loại film/music
+  - Extract engagement metrics (likes, retweets, replies)
+  - Filter by date range, keywords, users
+  - Tích hợp data cleaning
+  - Export CSV/JSON
 - [x] **Top Comments Feature** - Lấy comments có lượt like cao nhất
 - [x] **Multiple Ordering Options** - Sắp xếp theo thời gian, relevance
 - [x] **Data Schema** - Cấu trúc dữ liệu chuẩn hóa
@@ -36,15 +44,120 @@ Dự án phân tích cảm xúc (sentiment analysis) trên comments từ các n�
 ### 1. Clone repository
 ```bash
 git clone <repository-url>
-cd DataScience
+cd data-science-crawler
 ```
 
-### 2. Cài đặt dependencies
+### 2. Chọn Python Version
+
+⚠️ **Quan trọng**: `snscrape` yêu cầu **Python 3.11 hoặc thấp hơn** (không tương thích Python 3.12+)
+
+#### **Option A: Sử dụng Python 3.11 (Khuyến nghị)**
+
 ```bash
+# Kiểm tra Python 3.11 có sẵn không
+python3.11 --version
+
+# Nếu chưa có, cài Python 3.11:
+# macOS (Homebrew):
+brew install python@3.11
+
+# Ubuntu/Debian:
+sudo apt-get install python3.11 python3.11-venv python3.11-dev
+
+# Sau đó chạy setup với Python 3.11:
+bash setup_py311.sh
+```
+
+#### **Option B: Sử dụng Python 3.12+ với Fork**
+
+Nếu muốn dùng Python 3.12+, cần dùng fork của snscrape:
+
+```bash
+pip install git+https://github.com/JustAnotherArchivist/snscrape.git
+```
+
+### 3. Cài đặt uv (nếu chưa có)
+
+**uv** là package manager Python nhanh, được viết bằng Rust (optional nhưng khuyến nghị).
+
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Hoặc dùng pip
+pip install uv
+
+# Hoặc dùng pipx
+pipx install uv
+
+# Hoặc dùng homebrew (macOS)
+brew install uv
+```
+
+### 4. Tạo virtual environment và cài dependencies
+
+#### Cách 1: Sử dụng setup script với Python 3.11 (Khuyến nghị cho snscrape)
+
+```bash
+# macOS/Linux - Python 3.11
+bash setup_py311.sh
+
+# Hoặc setup thông thường (sẽ dùng Python hiện tại)
+bash setup.sh
+
+# Windows PowerShell
+.\setup.ps1
+
+# Windows CMD
+setup.bat
+```
+
+#### Cách 2: Manual setup với Python 3.11
+
+```bash
+# Tạo virtual environment với Python 3.11
+python3.11 -m venv .venv
+
+# Hoặc dùng uv (nếu có):
+uv venv --python python3.11
+
+# Activate virtual environment
+# macOS/Linux:
+source .venv/bin/activate
+
+# Windows:
+# PowerShell: .\.venv\Scripts\Activate.ps1
+# CMD: .venv\Scripts\activate.bat
+
+# Verify Python version (should show 3.11.x)
+python --version
+
+# Cài dependencies
+# Với uv (nhanh hơn):
+uv pip install -r requirements.txt
+
+# Hoặc với pip:
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Thiết lập YouTube API Key
+#### Cách 3: Dùng pip (chậm hơn)
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+# hoặc .venv\Scripts\activate  # Windows
+
+pip install -r requirements.txt
+```
+
+### 5. Cài đặt Playwright browser (cho Threads scraper)
+
+```bash
+playwright install chromium
+```
+
+### 5. Thiết lập YouTube API Key
 
 #### Bước 1: Tạo Google Cloud Project
 1. Truy cập [Google Cloud Console](https://console.cloud.google.com/)
@@ -345,6 +458,161 @@ python threads_scraper_complete.py 3
 - 🎯 Influencer analysis
 - 📱 Content performance analysis
 - 🔍 Social listening
+
+## 🐦 Twitter Entertainment Crawler - NEW! 🔥
+
+### Giới thiệu
+
+Crawler chuyên dụng để thu thập dữ liệu Twitter/X cho bài toán **sentiment analysis trên English social media comments về entertainment (films/music)**.
+
+### Cài đặt
+
+```bash
+# Cài đặt snscrape
+pip install snscrape
+
+# Hoặc cài tất cả dependencies
+pip install -r requirements.txt
+```
+
+### Tính năng
+
+✅ **Scrape tweets về films và music**
+- Tự động tìm tweets về movies và music
+- Filter chỉ English tweets
+- Tự động phân loại film/music
+
+✅ **Nhiều chế độ search**
+- By keywords/hashtags
+- By user
+- By date range
+- Film tweets riêng
+- Music tweets riêng
+- All entertainment tweets
+
+✅ **Dữ liệu phù hợp cho sentiment analysis**
+- Text content (cleaned)
+- Engagement metrics (likes, retweets, replies)
+- Metadata (hashtags, mentions, URLs)
+- Entertainment category (film/music)
+- User info (verified, followers)
+- Language detection (English only)
+
+✅ **Tích hợp data cleaning**
+- Auto-clean text
+- Remove URLs, mentions (optional)
+- Language detection
+- Validation
+
+### Sử dụng Interactive Menu
+
+```bash
+python twitter_entertainment_crawler.py
+```
+
+**Menu options:**
+1. Scrape Film Tweets
+2. Scrape Music Tweets
+3. Scrape All Entertainment (Film + Music)
+4. Scrape by Keywords (Custom)
+5. Scrape by User
+
+### Sử dụng trong Python Code
+
+```python
+from twitter_entertainment_crawler import TwitterEntertainmentCrawler
+
+crawler = TwitterEntertainmentCrawler()
+
+# Scrape film tweets
+film_tweets = crawler.scrape_film_tweets(max_tweets=500)
+
+# Scrape music tweets
+music_tweets = crawler.scrape_music_tweets(max_tweets=500)
+
+# Scrape by keywords
+tweets = crawler.scrape_by_keywords(
+    keywords=['#movie', '#film', 'movie review'],
+    max_tweets=1000,
+    category='film'  # or 'music'
+)
+
+# Scrape from user
+tweets = crawler.scrape_by_user(
+    username='netflix',
+    max_tweets=200,
+    category='film'
+)
+
+# Clean and save
+saved_files = crawler.clean_and_save(
+    tweets,
+    filename="film_tweets",
+    clean_data=True,
+    save_format='both'  # 'csv', 'json', or 'both'
+)
+
+# Get statistics
+stats = crawler.get_stats(tweets)
+print(f"Total tweets: {stats['total_tweets']}")
+print(f"Avg likes: {stats['avg_likes']:.1f}")
+```
+
+### Data Schema
+
+```python
+{
+    'comment_id': 'tweet_id',
+    'post_id': 'tweet_id',
+    'platform': 'Twitter',
+    'author_name': 'username',
+    'author_id': 'user_id',
+    'comment_text': 'tweet_content',
+    'published_at': 'timestamp',
+    'like_count': 'integer',
+    'retweet_count': 'integer',
+    'reply_count': 'integer',
+    'quote_count': 'integer',
+    'sentiment_label': None,  # To be filled
+    'sentiment_score': None,  # To be filled
+    'language': 'en',
+    'entertainment_category': 'film' or 'music',
+    'hashtags': 'JSON array',
+    'mentions': 'JSON array',
+    'urls': 'JSON array',
+    'media_type': 'photo' or 'video' or None,
+    'is_reply': 'boolean',
+    'parent_comment_id': 'parent_tweet_id',
+    'user_verified': 'boolean',
+    'user_followers': 'integer',
+    'tweet_id': 'tweet_id',
+    'crawled_at': 'timestamp'
+}
+```
+
+### Quick Test
+
+```bash
+python test_twitter_crawler.py
+```
+
+### Lưu ý
+
+⚠️ **snscrape không cần API key** - Hoạt động như Twitter search công khai
+
+⚠️ **Rate Limiting** - Có thể bị rate limit nếu scrape quá nhanh
+
+⚠️ **Terms of Service** - Tuân thủ Twitter Terms of Service
+
+⚠️ **Chỉ English** - Crawler tự động filter chỉ English tweets
+
+### Use Cases
+
+- 📊 Sentiment analysis trên film reviews
+- 🎵 Sentiment analysis trên music discussions
+- 📈 Track public opinion về movies/music
+- 🔍 Research entertainment industry trends
+- 💬 Analyze user engagement với entertainment content
 
 ## 📄 License
 
