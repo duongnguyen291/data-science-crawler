@@ -1,0 +1,25 @@
+# Checkpoints
+checkpoints/
+*.json
+
+# Logs
+log_part_*.txt
+log_test_part_*.txt
+
+# Output
+labeled_output/
+data_splits/
+data_splits_test/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment
+.env
+.venv
+venv/
+
